@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101a1b">
+<meta name="description" content="A media-literacy experience helping people in the Philippines pause, check sources, and share with care.">
+<title>TruthScan PH | Pause. Check. Share with care.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    color-scheme: dark;
+    --ink: #101a1b;
+    --ink-soft: #172626;
+    --ink-deep: #0c1314;
+    --paper: #f3f0e8;
+    --muted: #becac4;
+    --mint: #78e1cc;
+    --gold: #f2c66d;
+    --line: rgba(243, 240, 232, .16);
+    --sans: 'DM Sans', sans-serif;
+    --display: 'Space Grotesk', sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--sans);
+    line-height: 1.6;
+}
+a { color: inherit; }
+.skip-link {
+    position: absolute;
+    top: -60px;
+    left: 16px;
+    z-index: 20;
+    padding: 10px 14px;
+    background: var(--paper);
+    color: var(--ink);
+}
+.skip-link:focus { top: 12px; }
+.site-header {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 82px;
+    padding: 18px 7vw;
+    border-bottom: 1px solid rgba(255,255,255,.15);
+}
+.logo {
+    color: var(--paper);
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.logo span { color: var(--mint); }
+nav { display: flex; align-items: center; gap: 30px; }
+nav a {
+    color: #e4e9e4;
+    font-size: 14px;
+    text-decoration: none;
+}
+nav a:hover, nav a:focus-visible { color: var(--mint); }
+.nav-cta { padding: 9px 16px; border: 1px solid var(--mint); }
+.hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 690px;
+    min-height: min(820px, 100svh);
+    padding: 150px 10vw 82px;
+    isolation: isolate;
+    background: var(--ink) url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=2400&q=85') center 43% / cover no-repeat;
+}
+.hero::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10,18,19,.94) 0%, rgba(10,18,19,.78) 48%, rgba(10,18,19,.28) 100%), linear-gradient(0deg, rgba(10,18,19,.56), transparent 55%);
+    content: '';
+}
+.hero-content { max-width: 760px; }
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 22px;
+    color: var(--mint);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.eyebrow::before { width: 24px; height: 1px; background: currentColor; content: ''; }
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { font-family: var(--display); }
+.hero h1 {
+    max-width: 750px;
+    margin-bottom: 20px;
+    font-size: clamp(48px, 7vw, 82px);
+    line-height: 1.02;
+    font-weight: 600;
+}
+.hero h1 span { color: var(--mint); }
+.hero-copy { max-width: 570px; margin-bottom: 30px; color: #d3dad4; font-size: 18px; }
+.button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+    padding: 0 22px;
+    border: 1px solid var(--mint);
+    background: var(--mint);
+    color: var(--ink);
+    font: 700 14px var(--sans);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.button:hover { transform: translateY(-2px); background: #a4f0e2; }
+.button:focus-visible, input:focus-visible, textarea:focus-visible, nav a:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.hero-note { margin: 18px 0 0; color: #d3dad4; font-size: 12px; }
+.section { padding: 100px 10vw; }
+.section-heading { max-width: 650px; margin-bottom: 34px; }
+.section-heading h2 { margin-bottom: 12px; font-size: clamp(34px, 4vw, 52px); line-height: 1.1; }
+.section-heading p { color: var(--muted); }
+.scan-section { background: var(--paper); color: var(--ink); }
+.scan-layout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 40px; align-items: start; }
+.scan-section .eyebrow { color: #227c71; }
+.scan-section .section-heading { margin: 0; }
+.scan-section .section-heading p { color: #596562; }
+.scan-box { min-width: 0; padding: 24px; border: 1px solid #d5dad3; background: #fffefa; }
+.scan-box label { display: block; margin-bottom: 9px; font-size: 14px; font-weight: 700; }
+.scan-box input, .scan-box textarea {
+    width: 100%;
+    min-height: 54px;
+    padding: 12px 14px;
+    border: 1px solid #aeb8b2;
+    border-radius: 0;
+    background: white;
+    color: var(--ink);
+    font: 16px var(--sans);
+}
+.scan-box textarea { min-height: 120px; resize: vertical; }
+.scan-box input::placeholder, .scan-box textarea::placeholder { color: #697672; }
+.scan-box textarea:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.scan-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 16px; }
+.scan-actions .button { border-color: var(--ink); background: var(--ink); color: white; }
+.scan-actions .button:hover { background: #263d3d; }
+.scan-actions .button:disabled { cursor: wait; opacity: .7; transform: none; }
+.privacy-note { margin: 0; color: #596562; font-size: 12px; }
+.result {
+    min-width: 0;
+    min-height: 0;
+    margin-top: 18px;
+    padding: 0;
+    color: #334542;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+.result:not(:empty) { padding: 20px; border-left: 3px solid #227c71; background: #eaf3ef; }
+.result-summary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 28px;
+    row-gap: 16px;
+    margin-bottom: 24px;
+}
+.result-verdict {
+    margin: 0;
+    color: var(--ink);
+    font: 700 clamp(34px, 4.5vw, 48px)/1.1 var(--display);
+}
+.result-score { flex: 0 1 auto; min-width: 130px; text-align: left; }
+.result-score-value { display: block; color: #155e54; font: 700 32px/1 var(--display); }
+.result-score-label { display: block; margin-top: 5px; font-size: 11px; font-weight: 700; }
+.result-score-note { display: block; max-width: 260px; margin-top: 4px; color: #596562; font-size: 11px; line-height: 1.45; }
+.result-explanation { max-width: 70ch; }
+.result-explanation h4 { margin: 0 0 8px; font-size: 14px; }
+.result-explanation p { margin: 0; line-height: 1.75; }
+.result-sources { margin-top: 24px; padding-top: 18px; border-top: 1px solid #c9d8d1; }
+.result-sources h4 { margin: 0 0 12px; font-size: 14px; }
+.result-sources ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.result-sources li { min-width: 0; }
+.result-sources a {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 100%;
+    color: #075e55;
+    font-weight: 700;
+    line-height: 1.55;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+}
+.result-sources a::after { content: '↗'; flex: 0 0 auto; font-size: 12px; text-decoration: none; }
+.result-sources a:hover { color: #0b403a; text-decoration-thickness: 2px; }
+.result-sources a:focus-visible { outline: 3px solid #227c71; outline-offset: 3px; }
+.approach { background: var(--ink-soft); }
+.approach .section-heading { margin: 0 auto 42px; text-align: center; }
+.approach .eyebrow { justify-content: center; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+.step { padding: 28px 28px 10px 0; }
+.step + .step { padding-left: 28px; border-left: 1px solid var(--line); }
+.step-number { color: var(--gold); font: 600 14px var(--display); }
+.step h3 { margin: 24px 0 8px; font-size: 22px; }
+.step p { max-width: 320px; margin-bottom: 0; color: var(--muted); font-size: 14px; }
+.closing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    padding: 64px 10vw;
+    background: #e9c77e;
+    color: var(--ink);
+}
+.closing h2 { max-width: 620px; margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; }
+.closing .button { flex: 0 0 auto; border-color: var(--ink); background: var(--ink); color: white; }
+footer { display: flex; justify-content: space-between; gap: 20px; padding: 25px 7vw; color: #aebbb5; font-size: 12px; }
+footer p { margin: 0; }
+footer a { color: var(--mint); }
+@media (max-width: 760px) {
+    .site-header { min-height: 70px; padding: 14px 6vw; }
+    nav { gap: 14px; }
+    nav a { font-size: 12px; }
+    nav a:not(.nav-cta) { display: none; }
+    .hero { min-height: 720px; padding: 140px 7vw 70px; background-position: 58% center; }
+    .hero::before { background: linear-gradient(90deg, rgba(10,18,19,.91), rgba(10,18,19,.48)), linear-gradient(0deg, rgba(10,18,19,.5), transparent); }
+    .hero-copy { font-size: 16px; }
+    .section { padding: 72px 7vw; }
+    .scan-layout { grid-template-columns: 1fr; gap: 28px; }
+    .scan-box { padding: 20px; }
+    .result-summary { align-items: flex-start; column-gap: 20px; }
+    .result-score { min-width: 110px; }
+    .result-score-value { font-size: 28px; }
+    .result-score-note { max-width: 180px; }
+    .result:not(:empty) { padding: 16px; }
+    .steps { grid-template-columns: 1fr; }
+    .step, .step + .step { padding: 22px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+    .step h3 { margin-top: 12px; }
+    .closing { align-items: flex-start; flex-direction: column; padding: 52px 7vw; }
+    footer { flex-direction: column; padding: 22px 7vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+    <a class="logo" href="#home" aria-label="TruthScan PH home">TruthScan <span>PH</span></a>
+    <nav aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#approach">Our approach</a>
+        <a class="nav-cta" href="#scanner">Search a claim</a>
+    </nav>
+</header>
+<main id="main">
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="eyebrow">Media literacy for the Philippines</p>
+            <h1>Truth deserves <span>a second look.</span></h1>
+            <p class="hero-copy">Before a story travels further, take a moment to check where it came from, what it leaves out, and what the evidence says.</p>
+            <a class="button" href="#scanner">Search a claim</a>
+            <p class="hero-note">A thoughtful check starts with a question, not a score.</p>
+        </div>
+    </section>
+
+    <section class="section scan-section" id="scanner" aria-labelledby="scan-title">
+        <div class="scan-layout">
+            <div class="section-heading">
+                <p class="eyebrow">Take a closer look</p>
+                <h2 id="scan-title">Search and fact-check a claim</h2>
+                <p>Enter a question, headline, or claim. TruthScan searches current web sources, compares the evidence, and shows links supporting its assessment. Review the sources yourself; results may be incomplete or wrong.</p>
+            </div>
+            <form class="scan-box" id="scanForm">
+                <label for="newsInput" id="inputLabel">Search for a claim or ask a question</label>
+                <textarea id="newsInput" name="claim" placeholder="Type a question, paste a claim, headline, or article link" maxlength="2000" required></textarea>
+                <div class="scan-actions">
+                    <button class="button" id="submitButton" type="submit">Search and fact-check</button>
+                    <p class="privacy-note" id="privacyNote">Your search is sent to the fact-checking service. Don’t include sensitive personal information.</p>
+                </div>
+                <div class="result" id="result" role="status" aria-live="polite"></div>
+            </form>
+        </div>
+    </section>
+
+    <section class="section approach" id="approach" aria-labelledby="approach-title">
+        <div class="section-heading">
+            <p class="eyebrow">A simple habit</p>
+            <h2 id="approach-title">Pause. Check. Then decide.</h2>
+            <p>Good verification takes more than a convincing headline. Start with these questions before you share.</p>
+        </div>
+        <div class="steps">
+            <article class="step">
+                <span class="step-number">01 / SOURCE</span>
+                <h3>Who is behind it?</h3>
+                <p>Look for the original publisher, author, date, and links to primary material.</p>
+            </article>
+            <article class="step">
+                <span class="step-number">02 / CONTEXT</span>
+                <h3>What might be missing?</h3>
+                <p>Read beyond the headline. Check whether a quote, image, or statistic has been taken out of context.</p>
+            </article>
+            <article class="step">
+                <span class="step-number">03 / EVIDENCE</span>
+                <h3>Can it be corroborated?</h3>
+                <p>Compare independent reporting and trace important claims back to their evidence.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="closing" aria-label="Share carefully">
+        <h2>A little curiosity can change what we pass along.</h2>
+        <a class="button" href="#scanner">Search a claim</a>
+    </section>
+</main>
+<footer>
+    <p>TruthScan PH · Media literacy for a more informed Philippines</p>
+    <p>This website is for educational purposes only. It is not a substitute for professional fact-checking.</p>
+    <p>Developer: Jorence Dave M. Matic</p>
+</footer>
+<script>
+const scanForm = document.getElementById('scanForm');
+const newsInput = document.getElementById('newsInput');
+const result = document.getElementById('result');
+const submitButton = scanForm.querySelector('button[type="submit"]');
+
+function createSourcesSection(sources, title) {
+    const sourcesSection = document.createElement('section');
+    sourcesSection.className = 'result-sources';
+    const sourcesHeading = document.createElement('h4');
+    sourcesHeading.textContent = title;
+    const sourcesList = document.createElement('ul');
+    sources.forEach((source) => {
+        if (!source || typeof source.title !== 'string' || typeof source.url !== 'string') return;
+        let url;
+        try {
+            url = new URL(source.url);
+        } catch {
+            return;
+        }
+        if (!['http:', 'https:'].includes(url.protocol)) return;
+
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = url.href;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = source.title;
+        link.setAttribute('aria-label', `Open source: ${source.title}`);
+        item.append(link);
+        sourcesList.append(item);
+    });
+    if (!sourcesList.childElementCount) return null;
+    sourcesSection.append(sourcesHeading, sourcesList);
+    return sourcesSection;
+}
+
+scanForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const input = newsInput.value.trim();
+    if (!input) {
+        newsInput.focus();
+        return;
+    }
+
+    submitButton.disabled = true;
+    result.setAttribute('aria-busy', 'true');
+    result.textContent = 'Searching current sources and checking the claim...';
+
+    try {
+        const response = await fetch('/factcheck', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ claim: input })
+        });
+
+        const data = await response.json().catch(() => null);
+        if (!data || typeof data !== 'object') {
+            throw new Error('Fact-check service returned an invalid response.');
+        }
+        if (!response.ok) {
+            throw new Error(data.error || `Fact-check service returned HTTP ${response.status}`);
+        }
+        if (
+            typeof data.verdict !== 'string' ||
+            !data.verdict.trim() ||
+            typeof data.explanation !== 'string' ||
+            !data.explanation.trim() ||
+            (data.factualityPercent !== null &&
+                (!Number.isInteger(data.factualityPercent) ||
+                    data.factualityPercent < 0 ||
+                    data.factualityPercent > 100)) ||
+            !Array.isArray(data.sources)
+        ) {
+            throw new Error('Fact-check service returned an invalid response');
+        }
+
+        const summary = document.createElement('div');
+        summary.className = 'result-summary';
+        const heading = document.createElement('h3');
+        heading.className = 'result-verdict';
+        heading.textContent = data.verdict.trim();
+        const score = document.createElement('div');
+        score.className = 'result-score';
+        const scoreValue = document.createElement('span');
+        scoreValue.className = 'result-score-value';
+        const scoreLabel = document.createElement('span');
+        scoreLabel.className = 'result-score-label';
+        const scoreNote = document.createElement('span');
+        scoreNote.className = 'result-score-note';
+        if (data.factualityPercent === null) {
+            scoreValue.textContent = '—';
+            scoreLabel.textContent = 'UNRATED';
+            scoreNote.textContent = 'Not enough evidence for a percentage.';
+        } else {
+            scoreValue.textContent = `${data.factualityPercent}%`;
+            scoreLabel.textContent = 'FACTUALITY SCORE';
+            scoreNote.textContent = 'Estimated fit to reviewed evidence; not a probability.';
+        }
+        score.append(scoreValue, scoreLabel, scoreNote);
+        summary.append(heading, score);
+        const explanationSection = document.createElement('section');
+        explanationSection.className = 'result-explanation';
+        const explanationHeading = document.createElement('h4');
+        explanationHeading.textContent = 'Why this answer?';
+        const explanation = document.createElement('p');
+        explanation.textContent = data.explanation.trim();
+        explanationSection.append(explanationHeading, explanation);
+        const content = [summary, explanationSection];
+
+        const sourcesSection = createSourcesSection(data.sources, 'Sources supporting this check');
+        if (sourcesSection) content.push(sourcesSection);
+
+        result.replaceChildren(...content);
+    } catch (error) {
+        console.error('Check request failed:', error);
+        result.textContent = error instanceof Error && error.message !== 'Failed to fetch'
+            ? error.message
+            : 'The check could not be completed. Check your connection and try again later.';
+    } finally {
+        submitButton.disabled = false;
+        result.setAttribute('aria-busy', 'false');
+    }
+});
+</script>
+</body>
+</html>
